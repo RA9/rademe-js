@@ -1,6 +1,6 @@
 {
   "name": "@ra9/js-helpers",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "description": "Js Helper is a JavaScript helper library that  help makes developer work easier by leveraging these helpers method",
   "main": "index.js",
   "scripts": {
