@@ -15,14 +15,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RA9/js-helpers.git"
+    "url": "git+https://github.com/RA9/humblejs.git"
   },
   "author": "Carlos S. Nah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RA9/js-helpers/issues"
+    "url": "https://github.com/RA9/humblejs/issues"
   },
-  "homepage": "https://github.com/RA9/js-helpers#readme",
+  "homepage": "https://github.com/RA9/humblejs#readme",
   "devDependencies": {
     "gulp": "^4.0.2"
   },
