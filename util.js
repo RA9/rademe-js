@@ -240,7 +240,7 @@ const lcm = lib.math.lcm = (arr) => {
 lib.math.expression  = {};
 
 const parse = lib.math.expression.parse = (str, func) => {
-  if(str == "factorial") {
+  if (str == "factorial") {
 
   }
 } 
@@ -305,7 +305,7 @@ const clock = (lib.date.clock = elem => {
   } else if (currentHours < 12) {
     ampm = " AM";
   } else {
-    ampm = "PM";
+    ampm = " PM";
   }
 
   if (currentHours == 0) {
@@ -419,30 +419,30 @@ const check_pass = (lib.password.check_pass = pass => {
 /* --- Module Definition --- */
 
 	// Export HumbleJs for CommonJS. If being loaded as an AMD module, define it as such.
-	// Otherwise, just add `HumbleJs` to the global object
+	// Otherwise, just add `util-js` to the global object
 	if (typeof exports !== 'undefined') {
 		if (typeof module !== 'undefined' && module.exports) {
 			exports = module.exports = lib;
 		}
-		exports.helper = lib;
+		exports.util = lib;
 	} else if (typeof define === 'function' && define.amd) {
 		// Return the library as an AMD module:
 		define([], function() {
 			return lib;
 		});
 	} else {
-		lib.noConflict = (function(helper) {
+		lib.noConflict = (function(util) {
 			return function() {
-				root.helper = helper;
+				root.util = util;
 				// Delete the noConflict method:
 				lib.noConflict = undefined;
 				// Return reference to the library to re-assign it:
 				return lib;
 			};
-		})(root.helper);
+		})(root.util);
 
 		// Declare `fx` on the root (global/window) object:
-		root['helper'] = lib;
+		root['util'] = lib;
 	}
 
 	// Root will be `window` in browser or `global` on the server:
