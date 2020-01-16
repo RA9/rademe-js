@@ -23,7 +23,7 @@ function jsTask(){
     return src([
         './lib/helper.js', './lib/html.js', './lib/math.js', './lib/database.js', './lib/date.js', './lib/form.js', './lib/password.js','./lib/module.js', 
          ])
-        .pipe(concat('util.js'))
+        .pipe(concat('rademe.js'))
         .pipe(dest('.')
     );
 }

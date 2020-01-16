@@ -1,8 +1,8 @@
 {
-  "name": "util-js",
+  "name": "rademe-js",
   "version": "0.1.3",
-  "description": "util-js is a JavaScript helper library that  help makes developer work easier by leveraging these helpers method",
-  "main": "humble.js",
+  "description": "rademe-js is a JavaScript helper library that  help makes developer work easier by leveraging these helpers method",
+  "main": "rademe.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "gulp": "gulp"
@@ -15,14 +15,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RA9/util-js.git"
+    "url": "git+https://github.com/RA9/rademe-js.git"
   },
   "author": "Carlos S. Nah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RA9/util-js/issues"
+    "url": "https://github.com/RA9/rademe-js/issues"
   },
-  "homepage": "https://github.com/RA9/util-js#readme",
+  "homepage": "https://github.com/RA9/rademe-js#readme",
   "devDependencies": {
     "gulp": "^4.0.2"
   },

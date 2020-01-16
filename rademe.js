@@ -240,7 +240,7 @@ const lcm = lib.math.lcm = (arr) => {
 lib.math.expression  = {};
 
 const parse = lib.math.expression.parse = (str, func) => {
-  if (str == "factorial") {
+  if(str == "factorial") {
 
   }
 } 
@@ -305,7 +305,7 @@ const clock = (lib.date.clock = elem => {
   } else if (currentHours < 12) {
     ampm = " AM";
   } else {
-    ampm = " PM";
+    ampm = "PM";
   }
 
   if (currentHours == 0) {
@@ -418,31 +418,31 @@ const check_pass = (lib.password.check_pass = pass => {
 
 /* --- Module Definition --- */
 
-	// Export HumbleJs for CommonJS. If being loaded as an AMD module, define it as such.
-	// Otherwise, just add `util-js` to the global object
+	// Export js-helpers for CommonJS. If being loaded as an AMD module, define it as such.
+	// Otherwise, just add `helperjs` to the global object
 	if (typeof exports !== 'undefined') {
 		if (typeof module !== 'undefined' && module.exports) {
 			exports = module.exports = lib;
 		}
-		exports.util = lib;
+		exports.rademe = lib;
 	} else if (typeof define === 'function' && define.amd) {
 		// Return the library as an AMD module:
 		define([], function() {
 			return lib;
 		});
 	} else {
-		lib.noConflict = (function(util) {
+		lib.noConflict = (function(rademe) {
 			return function() {
-				root.util = util;
+				root.rademe = rademe;
 				// Delete the noConflict method:
 				lib.noConflict = undefined;
 				// Return reference to the library to re-assign it:
 				return lib;
 			};
-		})(root.util);
+		})(root.rademe);
 
 		// Declare `fx` on the root (global/window) object:
-		root['util'] = lib;
+		root['rademe'] = lib;
 	}
 
 	// Root will be `window` in browser or `global` on the server:
