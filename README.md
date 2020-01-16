@@ -1,8 +1,8 @@
-# HumbleJs
+# RademeJs
 A minimalist JavaScript library that make developers work easier  by allowing them to 
 use helper methods and functions.
 
-## Why you should use HumbleJs?
+## Why you should use RademeJs?
 It has a lot of cool helpers function that speed up development  and allow you to write clean code and save you the work of doing repetitive tasks. 
 It is free and works  well  in the browser and node environment  as well. 
 
@@ -42,7 +42,7 @@ Example 1:
 
 `helper.isBoolean()` takes in a data type to check whether it is a boolean value or not
 
-## How HumbleJs was born?
+## How RademeJs was born?
 It is an exciting thing to  work as a developer,  but it is very hard to stop being repetitive while working on  small projects. It gets complicated real quick and you ended up either spending more time fixing bugs or writing more error-prone codes.
 I too suffer from this and I spent lots of my time reading through my codes to fix bugs or improve on an existing code.
 There was a time during my internship at Kwagei Group where I was assigned a task to create a Kwagei Facebook using the core fundamental languages of the web(HTML, CSS, JavaScript).
