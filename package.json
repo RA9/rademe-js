@@ -1,6 +1,6 @@
 {
   "name": "rademe-js",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "rademe-js is a JavaScript helper library that  help makes developer work easier by leveraging these helpers method",
   "main": "rademe.js",
   "scripts": {
