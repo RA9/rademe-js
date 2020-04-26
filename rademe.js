@@ -1,5 +1,5 @@
-(function(root, undefined){
-/* --- Setup --- */
+(function (root, undefined) {
+  /* --- Setup --- */
 
   // Create the local library object, to be exported or referenced globally later
   const lib = {};
@@ -14,9 +14,9 @@
   /**
    * takes in a string and return true if it is a string
    * or false otherwise.
-   * @param {string} value - recieves a value as a string
+   * @param {string} value - receives a value as a string
    */
-  const isString = (lib.isString = function(value) {
+  const isString = (lib.isString = function (value) {
     return typeof value === "string" ? true : false;
   });
 
@@ -24,11 +24,11 @@
    * Takes in a value and check whether it is a number or not
    * @param {number} value - takes in a number or a value
    */
-  const isNumber = (lib.isNumber = function(value) {
+  const isNumber = (lib.isNumber = function (value) {
     return typeof number === "number" ? true : false;
   });
 
-  const isBoolean = (lib.isBoolean = function(bool) {
+  const isBoolean = (lib.isBoolean = function (bool) {
     return typeof bool === "boolean" ? true : false;
   });
 
@@ -37,21 +37,64 @@
    * @param {[]} arr - takes in an array or an object
    * from underscore.js, delegates to ECMA5's native Array.isArray
    */
-  const isArray = (lib.isArray = function(arr) {
-    return Array.isArray
-      ? Array.isArray(arr)
-      : toString.call(arr) === "[object Array]";
+  const isArray = (lib.isArray = function (arr) {
+    return Array.isArray ?
+      Array.isArray(arr) :
+      toString.call(arr) === "[object Array]";
   });
+
+  const getObjLength = lib.getObjLength = (obj) => {
+    let length = 0;
+    if (isObject(obj)) {
+      loop(obj, () => {
+        length += 1;
+      });
+    }
+    return length;
+  }
+
+  const isObjectEqual = lib.isObjectEqual = (obj1, obj2) => {
+    let count = 0;
+    if (isObject(obj1) && isObject(obj2)) {
+      loop(obj1, (el, key) => {
+        loop(obj2, (ele, k) => {
+          console.log("object arr: ", ele)
+          if (k == key && el == ele) {
+            count += 1;
+          }
+        })
+      })
+
+      return getObjLength(obj1) == getObjLength(obj2) && getObjLength(obj1) == count ? true : false;
+    }
+    return false;
+  }
+
+  /**
+   * @description Takes in an array as both arguments and compare them.
+   * @param {Array} arr1  takes in an array and compare it against another array
+   * @param {Array} arr2  takes in an array and compare it against the first arguments
+   */
+  const isArrayEqual = (lib.isArrayEqual = (arr1, arr2) => {
+    if (isArray(arr1) && isArray(arr2)) {
+      const a1 = JSON.stringify(arr1);
+      const a2 = JSON.stringify(arr2);
+      return JSON.stringify(arr1) === JSON.stringify(arr2);
+    }
+    else {
+      return new Error("It looks like you enter" + typeof arr1 + " and " + typeof arr2 + " instead of an array")
+    }
+  })
 
   /**
    * Takes in  an object and return true if it is an object or vice-versa
    * @param {{}} obj - takes in  an object
    */
-  const isObject = (lib.isObject = function(obj) {
+  const isObject = (lib.isObject = function (obj) {
     return obj && toString.call(obj) === "[object Object]";
   });
 
-  const pluralize = (lib.pluralize = function(counter, word) {
+  const pluralize = (lib.pluralize = function (counter, word) {
     if (counter == 1) {
       return word;
     } else if (word.endsWith("y")) {
@@ -64,13 +107,30 @@
     }
   });
 
+  const stringHasSpace = lib.stringHasSpace = (str) => {
+    let is_space = /\s/g;
+    return is_space.test(str);
+  }
+
+  /**
+   * @description count words separated by space and return the count
+   * @param {string} word a string that is pass to countWord
+   */
   const countWord = (lib.countWord = word => {
     let count = 0;
-    loop(word, w => {
-      count++;
-    });
+    if (isString(word) && stringHasSpace(word)) {
+      loop(word.split(/[ ]/), w => {
+        if (w != "") {
+          count++;
+        }
+
+      });
+    } else {
+      count += 1;
+    }
     return count;
   });
+
 
   const countAndLimitCharacters = (lib.countAndLimitCharacters = (
     element,
@@ -95,22 +155,24 @@
     }
   });
 
-   /**
+  /**
    * take in two arguments and check if it is an array, an object or a string.
    * it then return the various loop methods applicable to it.
    * @param {*} value - takes in a data types value, check whether it is an array, an object or a string
    * an then loop through them.
    * @param {} func - is a callback function that takes in the looped elements and pass it as an argument to this function
    */
-  const loop = (lib.loop = function(value, func) {
+  const loop = (lib.loop = function (value, func) {
     if (isArray(value)) {
       if (value.length == 1) {
         return value[0];
+      } else {
+        for (let index = 0; index < value.length; index++) {
+          const element = value[index];
+          func(element, index);
+        }
       }
-      for (let index = 0; index < value.length; index++) {
-        const element = value[index];
-        func(element);
-      }
+
     } else if (isObject(value)) {
       for (const key in value) {
         if (value.hasOwnProperty(key)) {
@@ -126,18 +188,15 @@
     }
   });
 
-
-const log =  lib.log = (val) => {
- return console.log(val);
-}
-
-
+  const log = lib.log = (...val) => {
+    console.log(...val);
+  }
 /*--- HTML5 Helper Definition ---*/
 lib.html = {};
 const elementArr = [];
 
 // create and return a html element
-const elt = (lib.html.elt = function(elem) {
+const elt = (lib.html.elt = function (elem) {
   return document.createElement(elem);
 });
 
@@ -150,7 +209,7 @@ const id = (lib.html.id = name => {
  *  return the query selector of a html element
  *  if @param {bool} is set to false it query selects a single element
  *  else if it is set to true it  query selects all of the elements.
- */ 
+ */
 const query = (lib.html.query = (elem, bool = false) => {
   if (bool !== "undefined" && bool === true) {
     return document.querySelectorAll(elem);
@@ -158,16 +217,58 @@ const query = (lib.html.query = (elem, bool = false) => {
   return document.querySelector(elem);
 });
 
+const checkExt = lib.checkExt = (ext) => {
+  switch (ext) {
+    case "js":
+      return "js"
+      break;
+    case "html":
+      return "html"
+      break;
+    case "css":
+      return "css";
+      break;
+    case "pdf":
+      return "pdf";
+      break;
+    default:
+      break;
+  }
+}
+
+const loadAssets = lib.html.loadAssets = (path, fileName) => {
+  if (isString(fileName)) {
+    const values = fileName.split(".");
+    loop(values, (value) => {
+      if (value == 'js') {
+        const scripts = elt("script");
+        scripts.src =  path + "/" +fileName;
+        const me =  query("body");
+        console.log(me)
+        display(scripts);
+      } else if (value == "css") {
+        const links = elt("link");
+        links.href =  path + "/" +fileName;
+        links.rel = "stylesheet";
+        const me =  query("head").appendChild(links);
+        console.log(me)
+        display(query("head"), links);
+      } 
+    })
+  }
+}
+
+
 /**
  *  display a html element 
  */
-const display = (lib.html.display = function(elem, element) {
-  if(arguments.length == 1) {
+const display = (lib.html.display = function (parent, child) {
+  if (arguments.length == 1) {
     return query("body").appendChild(arguments[0]);
   }
-  
-   return elem.appendChild(element);
-  });
+
+  return parent.appendChild(child);
+});
 
 //const lib = require("./helper");
 
@@ -236,7 +337,7 @@ const lcm = lib.math.lcm = (arr) => {
   }
 }
 
-/*--- Expression praser ---*/
+/*--- Expression parser ---*/
 lib.math.expression  = {};
 
 const parse = lib.math.expression.parse = (str, func) => {
@@ -313,12 +414,13 @@ const clock = (lib.date.clock = elem => {
   }
 
   elem.textContent = currentHours + " : " + currentMinutes + " : " + currentSeconds + ampm;
-  setTimeout(function() {
-      clock(elem);
-    }, 500);
+  setTimeout(function () {
+    clock(elem);
+  }, 500);
 
-  
+
 });
+
 
 const getFullDate = (lib.date.getFullDate = (element, date) => {
   let currentDate = "";
@@ -362,21 +464,35 @@ const getAge = (lib.date.getAge = year => {
   return newAge;
 });
 
+
+
+
 /*---- Form DOM Helper ----*/
 lib.form = {};
 
 const form = lib.form.element = (count, options) => {
     const form = elt("form");
     if (count > 1) {
-        loop(options, function(option) {
+        loop(options, function (option) {
+            const label = elt("label");
             if (option.label) {
-                const label = elt("label");
                 label.textContent = option.label;
+                form.appendChild(label);
             }
             const input = elt("input");
-            input.type = option.type;
-            input.placeholder = option.placeholder;
-            form.appendChild(label);
+            
+            if (option.type) {
+                input.type = option.type;
+            }
+
+            if (option.placeholder) {
+                input.placeholder = option.placeholder;
+            }
+
+            if (option.value) {
+                input.value = option.value;
+            }
+            
             form.appendChild(input);
             console.log(form);
         })
@@ -394,6 +510,7 @@ const gen_alpha_char = (lib.password.gen_alpha_char = () => {
   const rand_num = Math.floor(Math.random() * char.length);
   return char[rand_num];
 });
+
 
 const gen = (lib.password.gen = len => {
   let result = "";
@@ -418,8 +535,8 @@ const check_pass = (lib.password.check_pass = pass => {
 
 /* --- Module Definition --- */
 
-	// Export js-helpers for CommonJS. If being loaded as an AMD module, define it as such.
-	// Otherwise, just add `helperjs` to the global object
+	// Export rademejs for CommonJS. If being loaded as an AMD module, define it as such.
+	// Otherwise, just add `rademejs` to the global object
 	if (typeof exports !== 'undefined') {
 		if (typeof module !== 'undefined' && module.exports) {
 			exports = module.exports = lib;

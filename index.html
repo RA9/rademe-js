@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="lib/js/tinytest.js"></script>
+    <script src="./rademe.js"></script>
     <title>Testing</title>
   </head>
   <body>
@@ -12,76 +14,107 @@
       id="text"
       cols="30"
       rows="10"
-      onkeyup="helper.countAndLimitCharacters(this, 20)"
+      onkeyup="rademe.countAndLimitCharacters(this, 20)"
     ></textarea>
     <div id="time"></div>
     <span id="count"></span>
-    <script src="lib/js/tinytest.js"></script>
-    <script src="./humble.js"></script>
     <script>
-      let my_id = helper.html.id("text");
+      console.log(rademe);
+      rademe.html.loadAssets("lib/css", "style.css");
+    </script>
+    <script>
+      let my_id = rademe.html.id("text");
       tests({
-        "Count words": function() {
-          eq(6, helper.countWord("carlos"));
+        "Count words": function () {
+          eq(6, rademe.countWord("carlos is very    humble and intelligent"));
         },
-        "Check if it is an array": function() {
-          eq(true, helper.isArray([1, 3, 4, 5]));
-          eq(false, helper.isArray({}));
+        "Check if it is an array": function () {
+          eq(true, rademe.isArray([1, 3, 4, 5]));
+          eq(false, rademe.isArray({}));
         },
-        "check if it is an object": function() {
-          eq(true, helper.isObject({}));
+        "check if it is an object": function () {
+          eq(true, rademe.isObject({}));
         },
-        "loop through data types ": function() {
-          // eq('humble tr' ,JsHelpers.loop({tr: "humble"}, function(d, k) {
+        "loop through data types ": function () {
+          // eq('humble tr' ,Jsrademes.loop({tr: "humble"}, function(d, k) {
           //     console.log(d, k)
           // }));
           eq(
             "humble",
-            helper.loop(["humble"], function(element) {
+            rademe.loop(["humble"], function (element) {
               console.log(element);
             })
           );
         },
-        "Loop through a string": function() {
-          eq("10", helper.countWord("Carlosnahy"));
+        "Loop through a string": function () {
+          eq(3, rademe.countWord("Car los nah"));
         },
-        "Factorial for 7": function() {
-          eq("5040", helper.math.fn(7));
+        "Check if a string has space": function () {
+          eq(true, rademe.stringHasSpace("Carlosnah "));
         },
-        "Permutation of pn(52, 5)": function() {
-          eq("311875200", helper.math.pn(52, 5));
-        }
+        "Factorial for 7": function () {
+          eq("5040", rademe.math.fn(7));
+          eq("120", rademe.math.fn(5));
+        },
+        "Permutation of pn(52, 5)": function () {
+          eq("311875200", rademe.math.pn(52, 5));
+        },
+        "Check if two arrays are equal": function () {
+          tests({
+            "check for mismatch": function () {
+              eq(false, rademe.isArrayEqual([1, 2, 3, 4], [1, 2, 5, 4]));
+              eq(true, rademe.isArrayEqual([1, 2, 3, 4], [1, 2, 3, 4]));
+            },
+          });
+          tests({
+            "check if it handles empty arrays": function () {
+              eq(true, rademe.isArrayEqual([], []));
+              eq(true, rademe.isArrayEqual([""], [""]));
+            },
+          });
+        },
+        // "Check length of an object": function() {
+        //   eq(4, rademe.getObjLength({name: "john", last: "miller", digit: 3, room: 345}));
+        // },
+        // "Check if an object is equal": function() {
+        //   eq(true, rademe.isObjectEqual({name: ["peter", "john"], last: "miller", digit: 3, room: 345}, {name: ["john", "peter"], last: "miller", digit: 3, room: 345}));
+        // }
       });
 
-      helper.math.lcm([2, 3, 8, 6]);
+      rademe.math.lcm([2, 3, 8, 6]);
 
-      //   helper.form.element(3, {
-      //     name: {
-      //       placeholder: "Enter fullname",
-      //       value: "Name",
-      //       label: "Fullname",
-      //       type: "text"
-      //     },
-      //     email: {
-      //       placeholder: "Enter email",
-      //       type: "email",
-      //       value: "Email",
-      //       label: "Email"
-      //     },
-      //     phone: {
-      //       placeholder: "Enter Phone number",
-      //       value: "Phone",
-      //       label: "Phone number",
-      //       type: "tel"
-      //     }
-      //   });
+      console.log(
+        "Array is Equal: ",
+        rademe.isArrayEqual([{ name: "John" }], [{ name: "John" }])
+      );
+      rademe.form.element(3, {
+        name: {
+          placeholder: "Enter fullname",
+          label: "Fullname",
+          type: "text",
+        },
+        email: {
+          placeholder: "Enter email",
+          type: "email",
+          label: "Email",
+        },
+        phone: {
+          placeholder: "Enter Phone number",
+          label: "Phone number",
+          type: "tel",
+        },
+        submit: {
+          type: "submit",
+          value: "Submit"
+        }
+      });
       let me = "jlsj      ;ls ;lk f    kl;";
-      console.log("Jump: ", helper.password.clean(me));
-      console.log("me: ", helper.password.check_pass(helper.password.gen(8)));
-      //console.log(helper.date.clock())
-      const dateDiv = helper.html.id("time");
-      const h1 = helper.html.elt("h1");
-      helper.date.clock(dateDiv);
+      console.log("Jump: ", rademe.password.clean(me));
+      console.log("me: ", rademe.password.check_pass(rademe.password.gen(8)));
+      //console.log(rademe.date.clock())
+      // const dateDiv = rademe.html.id("time");
+      // const h1 = rademe.html.elt("h1");
+      // rademe.date.clock(dateDiv);
     </script>
   </body>
 </html>
